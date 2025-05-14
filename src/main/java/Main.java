@@ -13,6 +13,7 @@ Poniższe zadania będą się sprowadzały do modyfikacji bazowego kodu. Proces 
 //Niepoprawny wiek – gdy jest mniejszy od 0 lub większy niż 100. Niepoprawna data urodzenia – gdy nie jest zapisana w formacie DD-MM-YYYY, np. 28-02-2023.
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class WrongStudentName extends Exception {
@@ -41,9 +42,15 @@ class Main {
                     case 3:
                         exercise3();
                         break;
-                    default:
+                    case 0:
                         return;
+                    default:
+                        System.out.println("Nieprawidłowa opcja menu.");
+                        break;
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Błędny format wyboru! Wprowadź cyfrę.");
+                scan.nextLine(); // czyszczenie bufora po błędnym wejściu
             } catch (IOException e) {
                 System.out.println("Błąd wejścia/wyjścia.");
             } catch (WrongStudentName e) {
@@ -87,7 +94,6 @@ class Main {
         System.out.println("Podaj datę urodzenia DD-MM-YYYY");
         var date = scan.nextLine();
 
-        // sprawdzenie formatu DD-MM-YYYY
         if (!date.matches("\\d{2}-\\d{2}-\\d{4}"))
             throw new WrongDateOfBirth();
 
